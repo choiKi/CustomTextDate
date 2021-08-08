@@ -1,0 +1,36 @@
+package com.ckh.customview2
+
+import android.content.Context
+import android.util.AttributeSet
+import androidx.appcompat.widget.AppCompatTextView
+
+class CustomText: AppCompatTextView {
+
+    constructor(context: Context) : super(context) {}
+    constructor(context: Context, attrs: AttributeSet) : super(context,attrs) {
+        val attrsList = context.obtainStyledAttributes(attrs,R.styleable.CustomText)
+
+        for(i in 0 until attrsList.indexCount){
+            val attr = attrsList.getIndex(i)
+            when(attr){
+                R.styleable.CustomText_delimeter ->{
+                     attrsList.getString(attr)?.let{
+                         process(it)
+                     }
+                }
+            }
+        }
+    }
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr:Int) : super(context,attrs, defStyleAttr) {}
+
+    fun process(delimeter: String){
+        if(text.length == 8){
+            val first4 = text.substring(0,4)
+            val mid2 =   text.substring(4,6)
+            val last2 =  text.substring(6)
+
+            text = "${first4}${delimeter}${mid2}${delimeter}${last2}"
+        }
+
+    }
+}
